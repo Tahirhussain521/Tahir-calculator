@@ -1,105 +1,153 @@
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>تاہر کیلکولیٹر</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Its Tahir Calculator</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding: 30px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
     }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
     .calculator {
-      display: inline-block;
-      background-color: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 0 10px #888;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
+
     .display {
       width: 100%;
-      height: 50px;
+      height: 55px;
       font-size: 24px;
-      text-align: left;
-      padding: 5px 10px;
-      margin-bottom: 10px;
-      border: 2px solid #333;
-      border-radius: 5px;
+      text-align: right;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
     }
-    .btn {
-      width: 60px;
-      height: 40px;
-      font-size: 18px;
-      margin: 5px;
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 20px;
       border: none;
-      background-color: #ffc107;
-      border-radius: 5px;
+      border-radius: 10px;
+      background-color: #007bff;
+      color: white;
       cursor: pointer;
+      transition: background 0.3s;
     }
-    .btn:active {
-      background-color: #e0a800;
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .clear-btn {
+      background-color: #dc3545;
+      grid-column: span 2;
+    }
+
+    .back-btn {
+      background-color: #6c757d;
+    }
+
+    @media screen and (max-width: 500px) {
+      .calculator {
+        padding: 15px;
+      }
+
+      button {
+        padding: 12px;
+        font-size: 18px;
+      }
+
+      .display {
+        font-size: 20px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-
-  <h2>📱 تاہر کیلکولیٹر</h2>
-
+  <h2>💡 Its Tahir Calculator</h2>
   <div class="calculator">
-    <input type="text" class="display" id="screen" readonly>
+    <input type="text" class="display" id="display" readonly />
+    <div class="buttons">
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button onclick="append('/')">÷</button>
 
-    <br>
-    <button class="btn" onclick="press('7')">7</button>
-    <button class="btn" onclick="press('8')">8</button>
-    <button class="btn" onclick="press('9')">9</button>
-    <button class="btn" onclick="press('/')">÷</button>
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button onclick="append('*')">×</button>
 
-    <br>
-    <button class="btn" onclick="press('4')">4</button>
-    <button class="btn" onclick="press('5')">5</button>
-    <button class="btn" onclick="press('6')">6</button>
-    <button class="btn" onclick="press('*')">×</button>
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button onclick="append('-')">−</button>
 
-    <br>
-    <button class="btn" onclick="press('1')">1</button>
-    <button class="btn" onclick="press('2')">2</button>
-    <button class="btn" onclick="press('3')">3</button>
-    <button class="btn" onclick="press('-')">−</button>
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="append('+')">+</button>
 
-    <br>
-    <button class="btn" onclick="press('0')">0</button>
-    <button class="btn" onclick="press('.')">.</button>
-    <button class="btn" onclick="calculate()">=</button>
-    <button class="btn" onclick="press('+')">+</button>
-
-    <br>
-    <button class="btn" onclick="clearLast()">← ایک عدد ہٹائیں</button>
-    <button class="btn" onclick="clearScreen()">کلیر سب کچھ</button>
+      <button onclick="append('%')">%</button>
+      <button onclick="backspace()" class="back-btn">←</button>
+      <button onclick="clearDisplay()" class="clear-btn">Clear</button>
+    </div>
   </div>
+  <footer>© 2025 Made by Its Tahir 💻</footer>
 
   <script>
-    let screen = document.getElementById('screen');
-
-    function press(value) {
-      screen.value += value;
-    }
-
-    function clearScreen() {
-      screen.value = '';
-    }
-
-    function clearLast() {
-      screen.value = screen.value.slice(0, -1);
+    function append(value) {
+      document.getElementById("display").value += value;
     }
 
     function calculate() {
       try {
-        screen.value = eval(screen.value);
+        document.getElementById("display").value = eval(document.getElementById("display").value);
       } catch {
-        screen.value = 'غلط اندراج';
+        document.getElementById("display").value = "Error";
       }
     }
-  </script>
 
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+    }
+
+    function backspace() {
+      let current = document.getElementById("display").value;
+      document.getElementById("display").value = current.slice(0, -1);
+    }
+  </script>
 </body>
 </html>
